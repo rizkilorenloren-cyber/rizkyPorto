@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio — Rizky Aditya Krisna</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&family=Geist:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0F0E0C;
+      --bg-elev: #16140F;
+      --surface: #1C1A15;
+      --text: #E8E2D5;
+      --text-muted: #8A8377;
+      --text-dim: #5A574E;
+      --accent: #D4823C;
+      --accent-soft: #9B6028;
+      --line: #2A2622;
+      --line-bright: #3F3A32;
+      --status-green: #6FA85B;
+
+      --font-display: 'Fraunces', Georgia, serif;
+      --font-body: 'Geist', system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-weight: 400;
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Grain overlay for warmth */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+      pointer-events: none;
+      opacity: 0.05;
+      z-index: 1;
+      mix-blend-mode: overlay;
+    }
+
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      background: rgba(15, 14, 12, 0.72);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    .status-pill {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--status-green);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--status-green);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.45; }
+    }
+
+    /* Section common */
+    section {
+      padding: 7rem 0 3rem;
+      position: relative;
+    }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--accent);
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      letter-spacing: 0.02em;
+    }
+
+    .section-label::before {
+      content: '//';
+      color: var(--text-dim);
+    }
+
+    h1, h2, h3 {
+      font-family: var(--font-display);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 4.5vw, 3.25rem);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-intro {
+      color: var(--text-muted);
+      max-width: 600px;
+      font-size: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 8rem;
+      padding-bottom: 4rem;
+    }
+
+    .hero-meta {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .hero-meta span strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.75rem, 7.5vw, 6rem);
+      font-weight: 300;
+      margin-bottom: 2rem;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 580px;
+      margin-bottom: 3rem;
+      line-height: 1.75;
+    }
+
+    .terminal-line {
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .terminal-line::before {
+      content: '$';
+      color: var(--accent);
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 9px;
+      height: 1.05em;
+      background: var(--accent);
+      margin-left: 4px;
+      animation: blink 1s infinite;
+      vertical-align: middle;
+    }
+
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+
+    /* About */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      font-size: 1.02rem;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.75;
+    }
+
+    .about-text p:first-child::first-letter {
+      font-family: var(--font-display);
+      font-size: 3.5rem;
+      float: left;
+      line-height: 0.9;
+      padding: 0.2rem 0.5rem 0 0;
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    .info-card {
+      background: var(--bg-elev);
+      border: 1px solid var(--line);
+      padding: 1.75rem;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+    }
+
+    .info-card .field {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.7rem 0;
+      border-bottom: 1px dashed var(--line-bright);
+    }
+    .info-card .field:last-child { border-bottom: none; }
+    .info-card .label { color: var(--text-muted); }
+    .info-card .value { color: var(--text); text-align: right; }
+
+    /* Skills */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1rem;
+    }
+
+    .skill-category {
+      border: 1px solid var(--line);
+      padding: 1.5rem;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .skill-category:hover {
+      border-color: var(--accent-soft);
+      transform: translateY(-2px);
+    }
+
+    .skill-category h3 {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .skill-list {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .skill-list li {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      padding: 0.3rem 0.65rem;
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--line-bright);
+    }
+
+    .cert-item {
+      display: grid;
+      grid-template-columns: 110px 1fr auto;
+      gap: 2rem;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid var(--line);
+      align-items: center;
+    }
+    .cert-item:first-child { border-top: 1px solid var(--line); }
+
+    .cert-date {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .cert-name {
+      font-family: var(--font-body);
+      font-size: 1.02rem;
+      color: var(--text);
+    }
+
+    .cert-issuer {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    .cert-status {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      padding: 0.3rem 0.65rem;
+      border: 1px solid var(--line-bright);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .cert-status.active {
+      color: var(--accent);
+      border-color: var(--accent-soft);
+    }
+
+    .cert-status.done {
+      color: var(--status-green);
+      border-color: var(--status-green);
+    }
+
+    /* Projects */
+    .projects {
+      display: grid;
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .project-card {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 2rem;
+      padding: 2rem;
+      background: var(--bg-elev);
+      border: 1px solid var(--line);
+      transition: all 0.3s;
+    }
+
+    .project-card:hover {
+      border-color: var(--accent-soft);
+      transform: translateX(4px);
+    }
+
+    .project-number {
+      font-family: var(--font-mono);
+      font-size: 2.25rem;
+      color: var(--text-dim);
+      font-weight: 300;
+    }
+
+    .project-content h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .project-meta {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .project-content p {
+      color: var(--text-muted);
+      margin-bottom: 1.2rem;
+      line-height: 1.7;
+      font-size: 0.97rem;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .project-tags span {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      padding: 0.25rem 0.6rem;
+      color: var(--accent);
+      border: 1px solid var(--accent-soft);
+    }
+
+    /* Education */
+    .edu-item {
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 2rem;
+    }
+    .edu-item:first-of-type { border-top: 1px solid var(--line); }
+
+    .edu-period {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .edu-school {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .edu-program {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .edu-detail {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* Contact */
+    .contact {
+      padding: 8rem 0 6rem;
+    }
+
+    .contact h2 {
+      font-size: clamp(2.5rem, 7vw, 5.5rem);
+      margin-bottom: 1.5rem;
+      line-height: 1;
+    }
+
+    .contact h2 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .contact-intro {
+      color: var(--text-muted);
+      max-width: 580px;
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+
+    .contact-links {
+      display: grid;
+      margin-top: 3rem;
+      max-width: 520px;
+    }
+
+    .contact-link {
+      display: grid;
+      grid-template-columns: 90px 1fr auto;
+      padding: 1.25rem 0;
+      border-top: 1px solid var(--line);
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      color: var(--text);
+      text-decoration: none;
+      transition: all 0.2s;
+      align-items: center;
+    }
+
+    .contact-link:last-child { border-bottom: 1px solid var(--line); }
+
+    .contact-link:hover {
+      color: var(--accent);
+      padding-left: 0.5rem;
+    }
+
+    .contact-link .label {
+      color: var(--text-muted);
+      font-size: 0.76rem;
+    }
+
+    .contact-link .arrow {
+      transition: transform 0.2s;
+      color: var(--text-muted);
+    }
+
+    .contact-link:hover .arrow {
+      transform: translateX(4px);
+      color: var(--accent);
+    }
+
+    /* Footer */
+    footer {
+      padding: 2rem 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      color: var(--text-dim);
+    }
+
+    /* Reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Mobile */
+    @media (max-width: 820px) {
+      .nav-links { display: none; }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .project-card { grid-template-columns: 1fr; gap: 1rem; padding: 1.5rem; }
+      .project-number { font-size: 1.5rem; }
+      .cert-item { grid-template-columns: 1fr; gap: 0.5rem; }
+      .cert-item .cert-status { justify-self: start; }
+      .edu-item { grid-template-columns: 1fr; gap: 0.5rem; }
+      .contact-link { grid-template-columns: 70px 1fr auto; }
+      section { padding: 5rem 0 2rem; }
+      .container { padding: 0 1.25rem; }
+      .nav-inner { padding: 0.85rem 1.25rem; }
+      .hero { padding-top: 7rem; }
+      .hero-meta { gap: 1.25rem; font-size: 0.78rem; }
+      .status-pill { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- =========================================================
+     NAV — change [YN] to your initials
+     ========================================================= -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo">[<span>R.A.K</span>]</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="status-pill">
+      <span class="status-dot"></span>
+      open to opportunities
+    </div>
+  </div>
+</nav>
+
+<!-- =========================================================
+     HERO
+     ========================================================= -->
+<header class="hero">
+  <div class="container">
+    <div class="hero-meta">
+      <span>LOC <strong>Australia</strong></span>
+      <span>ROLE <strong>IT Student</strong></span>
+      <span>YEAR <strong>2026</strong></span>
+    </div>
+    <h1>
+      Rizky Aditya Krisna,<br>
+      building a foundation in<br>
+      <em>systems &amp; infrastructure.</em>
+    </h1>
+    <p class="hero-sub">
+      Informatics undergraduate exploring networking, sysadmin, and cloud infrastructure. Currently building hands-on experience through home labs, and personal projects.
+    </p>
+    <div class="terminal-line">
+      WhoAmI?<span class="cursor"></span>
+    </div>
+  </div>
+</header>
+
+<!-- =========================================================
+     ABOUT
+     ========================================================= -->
+<section id="about">
+  <div class="container">
+    <div class="section-label">about me</div>
+    <div class="about-grid">
+      <div class="about-text">
+        <h2 class="section-title">A student, learning by doing.</h2>
+        <p>
+          Studying Information Technology at University Of Newcastle, Focused on Systems Analysis & Design.
+        </p>
+        <p>
+          Passionate about understanding how things work under the hood — from network protocols to server architecture. I believe the best way to learn is by getting hands-on, making mistakes, and building projects that solve real problems.
+        </p>
+        <p>
+          I enjoy bridging the gap between human needs and technical implementation. Whether I'm mapping out system workflows, designing domain models, or analyzing user requirements, my goal is to ensure that the architecture we build actually solves the human problem it was meant to address.
+        </p>
+        <p>
+          Beyond the technical side, I thrive in collaborative environments where clear communication is key. I love breaking down complex technical concepts into ideas for everyone and myself to understand, managing project moving parts, and keeping teams aligned.
+        </p>
+      </div>
+      <aside class="info-card">
+        <div class="field">
+          <span class="label">name</span>
+          <span class="value">Rizky Aditya Krisna</span>
+        </div>
+        <div class="field">
+          <span class="label">based in</span>
+          <span class="value">Merewether NSW 2291</span>
+        </div>
+        <div class="field">
+          <span class="label">studying</span>
+          <span class="value">Information Technology</span>
+        </div>
+        <div class="field">
+          <span class="label">semester</span>
+          <span class="value">5th</span>
+        </div>
+        <div class="field">
+          <span class="label">focus</span>
+          <span class="value">Web Development · System Analysis & Design</span>
+        </div>  
+        <div class="field">
+          <span class="label">language</span>
+          <span class="value">INDONESIA · ENGLISH</span>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     SKILLS
+     ========================================================= -->
+<section id="skills">
+  <div class="container">
+    <div class="section-label">stack</div>
+    <h2 class="section-title">Tools I work with.</h2>
+    <p class="section-intro">
+      Technologies I've used in coursework, labs, and personal projects. Honest list — only what I've actually touched.
+    </p>
+    <div class="skills-grid">
+      <div class="skill-category">
+        <h3>Operating Systems</h3>
+        <ul class="skill-list">
+          <li>Windows Server</li>
+          <li>Windows 10/11</li>
+          <li>macOS</li>
+        </ul>
+      </div>
+      <div class="skill-category">
+        <h3>Networking</h3>
+        <ul class="skill-list">
+          <li>Cisco Packet Tracer</li>
+          <li>draw.io</li>
+          <li>MikroTik</li>
+          <li>VLAN / Subnetting</li>
+        </ul>
+      </div>
+      <div class="skill-category">
+        <h3>Cloud &amp; Virtualization</h3>
+        <ul class="skill-list">
+          <li>VirtualBox</li>
+          <li>VMware</li>
+          <li>AWS (learning)</li>
+          <li>Docker (basics)</li>
+        </ul>
+      </div>
+      <div class="skill-category">
+        <h3>Scripting &amp; Tools</h3>
+        <ul class="skill-list">
+          <li>JavaScript</li>
+          <li>HTML</li>
+          <li>Python</li>
+          <li>Git</li>
+          <li>PowerShell (learning)</li>
+        </ul>
+      </div>
+      <div class="skill-category">
+        <h3>Analysis &amp; Docs</h3>
+        <ul class="skill-list">
+          <li>UML / Use Case</li>
+          <li>ERD</li>
+          <li>Domain Class Diagram & Object Diagram</li>
+          <li>State Machine Diagrams</li>
+          <li>Sequence Diagrams</li>
+          <li>and more...</li> 
+        </ul>
+      </div>
+      <div class="skill-category">
+        <h3>Soft Skills</h3>
+        <ul class="skill-list">
+          <li>Troubleshooting</li>
+          <li>Documentation</li>
+          <li>Collaboration</li>
+          <li>Self-learning</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     PROJECTS / CASE STUDIES
+     ========================================================= -->
+<section id="projects">
+  <div class="container">
+    <div class="section-label">case studies</div>
+    <h2 class="section-title">Selected projects.</h2>
+    <p class="section-intro">
+      Coursework, labs, and personal projects. Each one taught me something I couldn't learn from a video.
+    </p>
+    <article class="project-card">
+        <div class="project-number">01</div>
+        <div class="project-content">
+          <h3>Game Store Website</h3>
+          <div class="project-meta">Web Technologies · University Project · 2025</div>
+          <p>
+            Making a simple e-commerce website for a fictional game store using HTML, CSS, and JavaScript. Implemented product listing, shopping cart functionality, and a checkout form. Focused on responsive design and user experience.
+          </p>
+          <div class="project-tags">
+            <span>HTML</span>
+            <span>CSS</span>
+            <span>JavaScript</span>
+            <span>XAMPP</span>
+          </div>
+        </div>
+      </article>
+    <div class="projects">
+      <article class="project-card">
+        <div class="project-number">02</div>
+        <div class="project-content">
+          <h3>Lab Equipment Loan System</h3>
+          <div class="project-meta">Database and Information Management · University Project · 2025</div>
+          <p>
+            Designed a system to replace the manual notebook-based equipment loan process at our campus lab. Mapped stakeholders and requirements, produced UML diagrams and an ERD. Documented design decisions and trade-offs.
+          </p>
+          <div class="project-tags">
+            <span>UML</span>
+            <span>Microsoft Visio</span>
+            <span>ERD</span>
+            <span>Requirement Analysis</span>
+          </div>
+        </div>
+      </article>
+      <article class="project-card">
+        <div class="project-number">03</div>
+        <div class="project-content">
+          <h3>Home Lab — Active Directory Domain</h3>
+          <div class="project-meta">Personal · 2026</div>
+          <p>
+            Built a virtualized AD environment with Windows Server 2022, joined client machines, configured GPOs for security baselines, and automated user provisioning with PowerShell.
+          </p>
+          <div class="project-tags">
+            <span>Windows Server</span>
+            <span>Active Directory</span>
+            <span>PowerShell</span>
+            <span>VirtualBox</span>
+          </div>
+        </div>
+      </article>
+      <article class="project-card">
+        <div class="project-number">04</div>
+        <div class="project-content">
+          <h3>Small Office Network Topology</h3>
+          <div class="project-meta">Systems and Network Administration · Group · 2026</div>
+          <p>
+            Designed a network for a hypothetical small office with VLAN segmentation, inter-VLAN routing, and DHCP relay. Built and tested in Cisco Packet Tracer, documented configuration choices and trade-offs.
+          </p>
+          <div class="project-tags">
+            <span>Cisco</span>
+            <span>VLAN</span>
+            <span>Routing</span>
+            <span>Network Design</span>
+            <span>draw.io</span>
+      </article>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     EDUCATION
+     ========================================================= -->
+<section id="education">
+  <div class="container">
+    <div class="section-label">education</div>
+    <h2 class="section-title">Education.</h2>
+    <p class="section-intro">Where I'm formally learning the foundations.</p>
+    <div class="edu-item">
+      <div class="edu-period">2023 — Present</div>
+      <div>
+        <div class="edu-school">University Name</div>
+        <div class="edu-program">Bachelor of Information Technology</div>
+        <p class="edu-detail">
+          Relevant coursework: Computer Networks, Systems Analysis &amp; Design, Database Systems, Operating Systems, Information Security, Cybersecurity.
+        </p>
+      </div>
+    </div>
+    <div class="edu-item">
+      <div class="edu-period">2020 — 2023</div>
+      <div>
+        <div class="edu-school">Bit Bina Aulia</div>
+        <div class="edu-program">Computer & Network Engineering </div>
+        <p class="edu-detail">
+          Learning the basics of computer hardware, networking, and system administration. Gained hands-on experience with Cisco Packet Tracer, Windows Server, and VirtualBox through labs and projects.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     CONTACT
+     ========================================================= -->
+<section id="contact" class="contact">
+  <div class="container">
+    <div class="section-label">contact</div>
+    <h2>Let's <em>talk.</em></h2>
+    <p class="contact-intro">
+      Looking for an internship, junior role, or just want to swap notes on networking and infrastructure? I read every message.
+    </p>
+    <div class="contact-links">
+      <a href="mailto:rizkilorenloren@gmail.com" class="contact-link">
+        <span class="label">email</span>
+        <span>rizkilorenloren@gmail.com</span>
+        <span class="arrow">→</span>
+      </a>
+      <a href="https://www.linkedin.com/in/rizky-krisna-11b735390/" class="contact-link" target="_blank" rel="noopener">
+        <span class="label">linkedin</span>
+        <span>Rizky Krisna </span>
+        <span class="arrow">→</span>
+      </a>
+      <a href="https://github.com/rizkilorenloren-cyber" class="contact-link" target="_blank" rel="noopener">
+        <span class="label">github</span>
+        <span>rizkilorenloren-cyber</span>
+        <span class="arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <span>© 2026 Rizky Aditya Krisna</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const sections = document.querySelectorAll('section');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
+
+  sections.forEach(el => {
+    el.classList.add('reveal');
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
